@@ -1,7 +1,7 @@
 
 # Library imports
 import shelve
-import collections
+import uuid
 
 # Project imports
 from persistent_dict    import PersistentDict
@@ -30,7 +30,16 @@ class Storage(object):
             return Note(seed_dict=self.db['notes'][uid])
 
     def create_note(self):
-        pass
+
+        # Create new uid
+        uid = self._create_uid()
+
+        # Craete new note
+        new_note = Note(seed_dict={'uid':uid})
+
+        # Store the note in the db
+        self.db['notes'][uid] = new_note
+
 
     def rebuild_index(self):
 
@@ -87,6 +96,9 @@ class Storage(object):
 
         # Return the rebuilt index dict
         return index
+
+    def _create_uid(self):
+        return uuid.uuid1().hex
 
     def _find_keypath(self, dict, key):
 
