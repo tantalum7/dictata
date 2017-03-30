@@ -27,6 +27,6 @@ class Dictata(object):
 
         self.gui.start()
 
-        while self.gui.isAlive():
+        while self.gui.is_alive():
             pass
 

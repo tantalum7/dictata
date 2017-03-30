@@ -3,16 +3,17 @@
 import Tkinter as tk
 import ttk
 from threading  import Thread
-from Queue      import Queue, Empty
+from multiprocessing import Process, Queue
+from Queue      import Empty
 
 import sys
 
-class GuiThread(Thread):
+class GuiThread(Process):
 
     def __init__(self):
 
         # Call thread initialiser
-        Thread.__init__(self)
+        Process.__init__(self)
 
         # Init class vars
         self.job_queue  = Queue()
@@ -27,7 +28,7 @@ class GuiThread(Thread):
 
         print "Button pressed"
 
-        self.add_job({'redraw_index' : 'job_stuff'})
+        #self.add_job({'redraw_index' : 'job_stuff'})
 
     def add_job(self, job_dict):
         self.job_queue.put(job_dict)
@@ -38,7 +39,6 @@ class GuiThread(Thread):
 
         for uid, title in data[0].items():
             self.note_tree.insert("", 1000, iid=uid, text=title)
-
 
     def process_jobs(self):
 
