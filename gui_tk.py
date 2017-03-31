@@ -21,6 +21,8 @@ class ApplicationCore(object):
 
         self.root = tk.Tk()
 
+
+
         """
         frame:master
             frame:left-sidebar
@@ -31,56 +33,123 @@ class ApplicationCore(object):
         
         """
 
-        self.frames = {}
-        self.frames['master'] = tk.Frame(self.root, width=500, height=500)
+        self.master_frame = tk.Frame(self.root, width=500, height=500)
 
-        self.toolbar = GuiToolbar( self.frames['master'], "toolbar" )
+        self.text_editor = TextEditor(self.master_frame, self.root)
 
-        self.frames['master'].pack(side=tk.TOP)
-
-
+        self.master_frame.pack()
 
 
     def run(self):
         self.root.mainloop()
 
 
-class GuiToolbar(tk.Frame):
-
-    def __init__(self, master, name, *args, **kwargs):
-
-        # Call ancestor init
-        tk.Frame.__init__(self, master, *args, **kwargs)
-
-        # Init class vars
-        self.master = master
-
-        self.photo = tk.PhotoImage(file="icons/bold-3x.gif")
-
-        # Init buttons
-        self.buttons = []
-        self.buttons.append( ToolbarButton(self, text="one", image=self.photo) )
-        self.buttons.append( ToolbarButton(self, text="two") )
-        self.buttons.append( ToolbarButton(self, text="three") )
-        self.pack_all_buttons()
-
-        self.pack()
-
-
-
-
-    def pack_all_buttons(self):
-        for button in self.buttons:
-            button.pack()
-
-
-
 class ToolbarButton(tk.Button):
 
-    def __init__(self, master, *args, **kwargs):
+    def __init__(self, master, text, bg=None, **kwargs):
 
         # Call ancestor init
-        tk.Button.__init__(self, master, *args, **kwargs)
+        tk.Button.__init__(self, master, text=text, bg=bg)
+
+        # Store root and master reference
+        self.master = master
+
+        # Create empty nop function
+        nop = lambda *args, **kwargs: None
+
+        # Init callback functions
+        self.on_click           = kwargs.get('on_click', nop)
+        self.on_right_click     = kwargs.get('on_right_click', nop)
+        self.on_mouse_enter     = kwargs.get('on_mouse_enter', nop)
+        self.on_mouse_leave     = kwargs.get('on_mouse_leave', nop)
+
+        # Bind callback functions
+        self.bind("<ButtonRelease-1>", self.on_click)
+        self.bind("<ButtonRelease-3>", self.on_right_click)
+        self.bind("<Enter>", self.on_mouse_enter)
+        self.bind("<Leave>", self.on_mouse_leave)
+
+
+class TextEditor(tk.Frame):
+
+    def __init__(self, master, root):
+
+        # Call ancestor init
+        tk.Frame.__init__(self, master, bg="blue")
+
+        # Store root and master reference
+        self.master = master
+        self.root = root
+
+        # Create toolbar, and toolbar buttons
+        self.toolbar = tk.Frame(self, bg="red")
+        self.toolbar_buttons = {'bold'      : ToolbarButton(self.toolbar, text="b", on_click=self.bold_handler),
+                                'italic'    : ToolbarButton(self.toolbar, text="i", on_click=self.italic_handler),
+                                'underline' : ToolbarButton(self.toolbar, text="u", on_click=self.underline_handler)
+        }
+
+        # Pack toolbar and toolbar buttons
+        list(map( lambda btn: btn.pack(side=tk.LEFT), self.toolbar_buttons.values() ))
+        self.toolbar.pack(side=tk.TOP, fill=tk.X)
+
+        # Create and pack text area
+        self.editor = tk.Text(self)
+        self.editor.pack(side=tk.TOP, fill=tk.X)
+
+        # Final pack of everything in the frame
+        self.pack(side=tk.TOP, fill=tk.X)
+
+        # Prepare fonts
+        self.fonts = {}
+        self.fonts['default']   = font.Font(root=self.root, family='Arial', size=10)
+        self.fonts['bold']      = font.Font(root=self.root, family='Arial', size=10, weight="bold")
+        self.fonts['italic']    = font.Font(root=self.root, family='Arial', size=10, slant="italic")
+        self.editor.config( {'font' : self.fonts['default']} )
+
+        # Prepare editor tags
+        self.editor.tag_config( 'bold', {'font': self.fonts['bold']} )
+        self.editor.tag_config( 'italic', {'font': self.fonts['italic']})
+        self.editor.tag_config( 'underline', {'underline' : tk.YES} )
+
+        self.editor.tag_raise('bold', 'italic')
+
+
+    def bold_handler(self, event):
+        selection = self.get_text_selection()
+        if selection:
+            if self.editor.tag_nextrange('bold', selection[0], selection[1]):
+                self.editor.tag_remove('bold', selection[0], selection[1])
+            else:
+                self.editor.tag_add('bold', selection[0], selection[1])
+
+        print("Be bold")
+
+    def italic_handler(self, event):
+        selection = self.get_text_selection()
+        if selection:
+            if self.editor.tag_nextrange('italic', selection[0], selection[1]):
+                self.editor.tag_remove('italic', selection[0], selection[1])
+            else:
+                self.editor.tag_add('italic', selection[0], selection[1])
+
+    def underline_handler(self, event):
+        selection = self.get_text_selection()
+        if selection:
+            if self.editor.tag_nextrange('underline', selection[0], selection[1]):
+                self.editor.tag_remove('underline', selection[0], selection[1])
+            else:
+                self.editor.tag_add('underline', selection[0], selection[1])
+
+    def get_text_selection(self):
+
+        # Grab the start and end range of selection
+        start, end = self.editor.tag_ranges("sel")
+
+        # Return the selection range - if start and end is the same, return None
+        return (start.string, end.string) if start.string != end.string else None
+
+
+
 
 
 """
