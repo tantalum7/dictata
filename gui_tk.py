@@ -143,10 +143,20 @@ class TextEditor(tk.Frame):
     def get_text_selection(self):
 
         # Grab the start and end range of selection
-        start, end = self.editor.tag_ranges("sel")
+        start_end = self.editor.tag_ranges("sel")
 
-        # Return the selection range - if start and end is the same, return None
-        return (start.string, end.string) if start.string != end.string else None
+        # Check we got a tuple for the range
+        if start_end:
+
+            # Extract start and end from the tuple
+            start, end = start_end
+
+            # Return the selection range - if start and end is the same, return None
+            return (start.string, end.string) if start.string != end.string else None
+
+        # We didn't get a range (nothing selected), return none
+        else:
+            return None
 
 
 
