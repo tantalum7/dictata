@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import font
-
+from decimal import *
 
 
 """
@@ -85,7 +85,8 @@ class TextEditor(tk.Frame):
         self.toolbar = tk.Frame(self, bg="red")
         self.toolbar_buttons = {'bold'      : ToolbarButton(self.toolbar, text="b", on_click=self.bold_handler),
                                 'italic'    : ToolbarButton(self.toolbar, text="i", on_click=self.italic_handler),
-                                'underline' : ToolbarButton(self.toolbar, text="u", on_click=self.underline_handler)
+                                'underline' : ToolbarButton(self.toolbar, text="u", on_click=self.underline_handler),
+                                'X'         : ToolbarButton(self.toolbar, text="x", on_click=self.func_x),
         }
 
         # Pack toolbar and toolbar buttons
@@ -140,6 +141,9 @@ class TextEditor(tk.Frame):
             else:
                 self.editor.tag_add('underline', selection[0], selection[1])
 
+    def func_x(self, event):
+        self.tags_to_html()
+
     def get_text_selection(self):
 
         # Grab the start and end range of selection
@@ -157,6 +161,33 @@ class TextEditor(tk.Frame):
         # We didn't get a range (nothing selected), return none
         else:
             return None
+
+
+    def tags_to_html(self):
+
+        start = "1.0"
+
+        text = self.editor.get('1.0', 'end')
+        html = text
+
+        num_tags = len( self.editor.tag_ranges('bold') ) / 2
+        for x in range(int(num_tags)):
+
+            index_tuple = self.editor.tag_nextrange('bold', start, "end")
+
+            start_row, start_col = index_tuple[0].split('.')
+            end_row, end_col = index_tuple[1].split('.')
+
+            if start_row == end_row:
+                end_offset = end_row + "." + str( int( end_col ) + 3 )
+            else:
+                end_offset = index_tuple[1]
+
+            .editor.insert(index_tuple[0], "<b>")
+            self.editor.insert(end_offset, "</b>")
+
+            start = end_offset
+
 
 
 
