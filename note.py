@@ -113,9 +113,9 @@ if __name__ == "__main__":
 
     n1 = Note()
 
-    print hash(n1)
+    print(hash(n1))
 
     n1.title = "stuff"
 
-    print hash(n1)
+    print(hash(n1))
 

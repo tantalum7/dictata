@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     with PersistentDict('demo.json', 'c', format='json') as d:
 
-        print d
+        print(d)
 
         d['stuff'] = {'more' : 'stuffs'}
 
@@ -97,6 +97,6 @@ if __name__ == '__main__':
 
         b = "SHIT"
 
-        print b
+        print( b)
 
 
