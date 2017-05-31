@@ -4,29 +4,15 @@
 
 # Project imports
 from storage    import Storage
-from gui        import GuiThread
+from note       import Note, NoteList
 
 
 class Dictata(object):
 
     def __init__(self):
 
-        self.gui = GuiThread()
-
         self.storage = Storage()
-
         self.storage.open("test.json")
 
-        index = self.storage.rebuild_index()
-
-        self.gui.add_job({'redraw_index' : index})
-
-        pass
-
-    def run(self):
-
-        self.gui.start()
-
-        while self.gui.is_alive():
-            pass
+        self.note_list = NoteList()
 

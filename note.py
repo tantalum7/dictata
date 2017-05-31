@@ -5,6 +5,14 @@ from time           import time
 from datetime       import date
 
 
+class NoteList(object):
+
+    def __init__(self):
+        self.notes = {}
+
+    def load_from_storage(self):
+
+
 class Note(object):
 
     def __init__(self, db):

@@ -9,7 +9,7 @@ def main():
 
     app.run()
 
-    print "App Ends"
+    print("App Ends")
 
 
 if __name__ == "__main__":
