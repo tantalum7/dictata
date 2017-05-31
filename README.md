@@ -1,5 +1,11 @@
 # README #
 
-Note taking app. Designed to be offline version of evernote, with rich text, indexing/searching as well as encryption and security. 
+Open source note taking app, replacement for premium services (evernote etc)
 
-In short, I love Evernote but can't use it at work because of security concerns. Aim is to implement something similar, that is encrypted and local only.
+ * End to end encryption (storage backend need not be secure)
+ * Plugins-based storage backend (offline, onedrive/dropbox/gdrive, git, ftp etc)
+ * Themeable via css/html
+ * Rich text editing
+ * Hierarchical organisation
+ * Deep search and shallow search (search encrypted files or public tags?)
+ * Automatic code update via git
