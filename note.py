@@ -4,23 +4,90 @@ from hashlib        import md5
 from time           import time
 from datetime       import date
 
+# Project imports
+from exceptions     import ObjectNotFoundException
 
 class NoteList(object):
+    INDEX_UID = "INDEX00".ljust(32, "#")
 
-    def __init__(self):
-        self.notes = {}
+    def __init__(self, storage):
+        self.notes      = {}
+        self.index      = None
+        self.storage    = storage
 
     def load_from_storage(self):
+        pass
+
+    def load_index(self):
+
+        try:
+            self.index = self.storage.get(self.INDEX_UID)
+
+        except ObjectNotFoundException:
+            self.create_index()
+
+        except:
+            raise
+        self.populate_index()
+
+    def populate_index(self):
+
+        for uid in self.index.keys():
+            self.notes[uid] = Note( uid=uid, data=self.storage.get(uid=uid) )
+
+    def create_index(self):
+        self.index = {}
+        self.storage.put(uid=self.INDEX_UID, data=self.index)
+
+    def add_to_index(self, note):
+        self.index[note.uid] = note
+
+    def push_index(self):
+        self.storage.put(uid=self.INDEX_UID, data=self.index)
+
+    def create_note(self):
+        new_note = Note( uid=self.storage.uid() )
+        self.storage.put(uid=new_note.uid, data=new_note.data)
+        self.index[new_note.uid] = None
+        self.notes[new_note.uid] = new_note
+
+
+        return new_note
+
+    def push_all(self):
+
+        self.push_index()
+
+        for note in self.notes.values():
+            if note.hash != note.committed_hash:
+                self.storage.put(uid=note.uid, data=note.data)
+                note.committed_hash = note.hash
+
+    def sync_all(self):
+        self.storage.sync()
+
 
 
 class Note(object):
 
-    def __init__(self, db):
+    def __init__(self, uid, data=None):
 
         # Init class vars
-        self._db    = db
-        self._hash  = None
-        self._uid   = self._db['uid']
+        self._uid               = uid
+        self._hash              = None
+        self.committed_hash     = None
+
+        if data:
+            self.data = data
+        else:
+            self.data = {  'title'              : '',
+                           'body'               : '',
+                           'tags'               : '',
+                           'parent'             : '',
+                           'creation_time'      : time(),
+                           'last_edit_time'     : time(),
+                           'meta'               : '',
+                         }
 
     @property
     def hash(self):
@@ -35,70 +102,72 @@ class Note(object):
 
     @property
     def title(self):
-        return self._db['title']
+        return self.data['title']
 
     @title.setter
     def title(self, new_title):
-        self._db['title']       = new_title
+        self.data['title']      = new_title
         self._hash              = None
         self._last_edit_time    = time()
 
     @property
     def body(self):
-        return self._db['body']
+        return self.data['body']
 
     @body.setter
     def body(self, new_body):
-        self._db['body']        = new_body
+        self.data['body']       = new_body
         self._hash              = None
 
     @property
     def tags(self):
-        return self._db['tags']
+        return self.data['tags']
 
     @tags.setter
     def tags(self, new_tags):
-        self._db['tags']        = new_tags
+        self.data['tags']       = new_tags
         self._hash              = None
 
     @property
     def parent(self):
-        return self._db['parent']
+        return self.data['parent']
 
     @parent.setter
     def parent(self, new_parent):
-        self._db['parent']      = new_parent
+        self.data['parent']     = new_parent
         self._hash              = None
         self._last_edit_date    = time()
 
     @property
     def creation_time(self):
-        return self._db['creation_time']
+        return self.data['creation_time']
 
     @property
     def creation_date(self):
-        return date(self._db['creation_time'])
+        return date(self.data['creation_time'])
 
     @property
     def last_edit_time(self):
-        return self._db['last_edit_time']
+        return self.data['last_edit_time']
 
     @property
     def last_edit_date(self):
-        return date(self._db['last_edit_time'])
+        return date(self.data['last_edit_time'])
 
     @property
     def meta(self):
-        return self._db['meta']
+        return self.data['meta']
 
     @meta.setter
     def meta(self, new_meta):
-        self._db['meta']        = new_meta
+        self.data['meta']       = new_meta
         self._hash              = None
         self._last_edit_time    = time()
 
     def _rehash(self):
-        self._hash = md5().new( ''.join( str(x) for x in self._db.values().sort() ) ).hexdigest()
+        m = md5()
+        m.update( ''.join(str(self.data[x]) for x in sorted( list( self.data.keys() ) ) ).encode() )
+        self._hash = m.hexdigest()
 
 def CreateNoteDict(uid):
 

@@ -1,29 +1,30 @@
 
 # Library imports
-from uuid               import uuid1
+import uuid
 
 # Project imports
-from backend            import StorageBackend
-from note               import Note, CreateNoteDict
-
-
-class NoteNotFoundError(Exception):
-    pass
-
+from backend    import StorageBackend
 
 class Storage(object):
 
     def __init__(self):
         self._db = StorageBackend()
 
-    def open(self, file_dir):
-        self._db.open(file_dir)
-
-    def put(self, object_id, object):
-        self._db.put_object(object_id=object_id, object=object)
-
-    def get(self, object_id):
-        self._db.get_object(object_id)
+    def open(self, path):
+        return self._db.open(path)
 
     def close(self):
-        self._db.close()
+        return self._db.close()
+
+    #TODO: Encrypt/decrypt the get/put methods into safe strings
+    def get(self, uid):
+        return self._db.get(uid)
+
+    def put(self, uid, data):
+        return self._db.put(uid=uid, data=data)
+
+    def sync(self):
+        return self._db.sync()
+
+    def uid(self):
+        return uuid.uuid4().hex

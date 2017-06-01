@@ -1,9 +1,10 @@
 
 # Library imports
-import pickle, json, csv, os, shutil
+import pickle, json, csv, os, shutil, uuid
 
 # Project imports
 from backend.generic_backend import GenericBackend
+from exceptions import StorageOpenException, ObjectNotFoundException
 
 class LocalJsonBackend(GenericBackend):
 
@@ -15,22 +16,22 @@ class LocalJsonBackend(GenericBackend):
             self._db = _PersistentDict(filename=path, format='json')
 
         except ValueError as detail:
-            raise self.StorageOpenException(detail)
+            raise StorageOpenException(detail)
 
         except:
             raise
 
     def close(self):
-        self.synchronise()
+        self.sync()
         self._db.close()
         self._db = None
 
-    def get_object(self, object_id):
+    def get(self, uid):
         try:
-            obj = self._db[object_id]
+            obj = self._db[uid]
 
         except KeyError:
-            raise self.ObjectNotFoundException
+            raise ObjectNotFoundException
 
         except:
             raise
@@ -38,11 +39,13 @@ class LocalJsonBackend(GenericBackend):
         else:
             return obj
 
-    def put_object(self, object_id, object):
-        self._db[object_id] = object
+    def put(self, uid, data):
+        self._db[uid] = data
 
-    def synchronise(self):
+    def sync(self):
         self._db.sync()
+
+
 
 
 class _PersistentDict(dict):

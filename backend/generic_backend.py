@@ -2,14 +2,7 @@
 
 class GenericBackend(object):
 
-    class StorageInitaliseException(Exception):
-        pass
 
-    class StorageOpenException(Exception):
-        pass
-
-    class ObjectNotFoundException(Exception):
-        pass
 
     def initialise(self, settings):
         pass
@@ -20,12 +13,14 @@ class GenericBackend(object):
     def close(self):
         pass
 
-    def get_object(self, object_id):
+    def get(self, uid):
         pass
 
-    def put_object(self, object_id):
+    def put(self, uid, data):
         pass
 
-    def synchronise(self):
+    def sync(self):
         pass
 
+    def uid(self):
+        pass
