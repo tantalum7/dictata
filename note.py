@@ -45,7 +45,7 @@ class NoteList(object):
     def push_index(self):
         self.storage.put(uid=self.INDEX_UID, data=self.index)
 
-    def create_note(self):
+    def create(self):
         new_note = Note( uid=self.storage.uid() )
         self.storage.put(uid=new_note.uid, data=new_note.data)
         self.index[new_note.uid] = None
@@ -53,6 +53,12 @@ class NoteList(object):
 
 
         return new_note
+
+
+    def delete(self, uid):
+        del self.index[uid]
+        del self.notes[uid]
+        self.sync_all()
 
     def push_all(self):
 
