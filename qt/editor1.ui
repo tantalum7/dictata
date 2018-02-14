@@ -70,6 +70,9 @@ border:none;
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
+         </property>
          <property name="headerHidden">
           <bool>true</bool>
          </property>
@@ -1133,6 +1136,20 @@ QPushButton:disabled{
                </property>
                <property name="text">
                 <string></string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="dbg1_button">
+               <property name="text">
+                <string>DBG1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="dbg2_button">
+               <property name="text">
+                <string>DBG2</string>
                </property>
               </widget>
              </item>

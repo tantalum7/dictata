@@ -35,6 +35,7 @@ class Ui_MainWindow(object):
 "border:none;\n"
 "}")
         self.notes_treeview.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.notes_treeview.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
         self.notes_treeview.setHeaderHidden(True)
         self.notes_treeview.setColumnCount(1)
         self.notes_treeview.setObjectName("notes_treeview")
@@ -635,6 +636,12 @@ class Ui_MainWindow(object):
 "}")
         self.sync_button.setObjectName("sync_button")
         self.horizontalLayout_5.addWidget(self.sync_button)
+        self.dbg1_button = QtWidgets.QPushButton(self.editortoolbar_container)
+        self.dbg1_button.setObjectName("dbg1_button")
+        self.horizontalLayout_5.addWidget(self.dbg1_button)
+        self.dbg2_button = QtWidgets.QPushButton(self.editortoolbar_container)
+        self.dbg2_button.setObjectName("dbg2_button")
+        self.horizontalLayout_5.addWidget(self.dbg2_button)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem1)
         self.verticalLayout_3.addWidget(self.editortoolbar_container)
@@ -749,6 +756,8 @@ class Ui_MainWindow(object):
         self.strikethrough_button.setText(_translate("MainWindow", ""))
         self.sync_button.setToolTip(_translate("MainWindow", "Delete"))
         self.sync_button.setText(_translate("MainWindow", ""))
+        self.dbg1_button.setText(_translate("MainWindow", "DBG1"))
+        self.dbg2_button.setText(_translate("MainWindow", "DBG2"))
         self.body_textedit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -760,4 +769,4 @@ class Ui_MainWindow(object):
         self.actionPreferences.setText(_translate("MainWindow", "Preferences"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
 
-import qt.main_resources_rc
+#import main_resources_rc
