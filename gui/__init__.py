@@ -65,7 +65,7 @@ class GUI(QtWidgets.QApplication):
         self.editor.delete_button.clicked.connect(self._clicked_deletebutton)
         self.editor.notes_treeview.customContextMenuRequested.connect(self.contextMenuEvent)
         self.editor.notes_treeview.clicked.connect(self._clicked_notestreeview)
-        self.editor.title_lineedit.textChanged.connect(self._changed_titlelineedit)
+        self.editor.title_lineedit.textEdited.connect(self._changed_titlelineedit)
         self.editor.dbg1_button.clicked.connect(self.dbg1)
         self.editor.dbg2_button.clicked.connect(self.dbg2)
 
