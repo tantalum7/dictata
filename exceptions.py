@@ -5,7 +5,7 @@ class StorageInitaliseException(Exception):
 class StorageOpenException(Exception):
     pass
 
-class ObjectNotFoundException(Exception):
+class DocumentNotFoundException(Exception):
     pass
 
 class NoUIDProvidedException(Exception):

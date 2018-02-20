@@ -3,8 +3,8 @@
 import pickle, json, csv, os, shutil, uuid
 
 # Project imports
-from backend.generic_backend import GenericBackend
-from exceptions import StorageOpenException, ObjectNotFoundException
+from storage.generic_backend import GenericBackend
+from exceptions import StorageOpenException, DocumentNotFoundException
 
 class LocalJsonBackend(GenericBackend):
 
@@ -18,32 +18,53 @@ class LocalJsonBackend(GenericBackend):
         except ValueError as detail:
             raise StorageOpenException(detail)
 
-        except:
-            raise
-
-    def close(self):
+    def close(self, options=None):
         self.sync()
         self._db.close()
         self._db = None
 
-    def get(self, uid):
+    def get(self, uid, key):
         try:
             obj = self._db[uid]
 
         except KeyError:
-            raise ObjectNotFoundException
+            raise DocumentNotFoundException
 
-        except:
-            raise
+        else:
+            return obj.get(key, None)
+
+    def get_document(self, uid):
+        try:
+            obj = self._db[uid]
+
+        except KeyError:
+            raise DocumentNotFoundException
 
         else:
             return obj
 
-    def put(self, uid, data):
-        self._db[uid] = data
+    def delete_document(self, uid):
+        try:
+            obj = self._db[uid]
 
-    def sync(self):
+        except KeyError:
+            raise DocumentNotFoundException
+
+        else:
+            del self._db[uid]
+
+    def put(self, uid, key, value):
+        if not self._db[uid]:
+            self._db[uid] = {}
+
+        self._db[uid][key] = value
+
+    def sync(self, options=None):
         self._db.sync()
+
+    def count(self, uid):
+        return len(self._db[uid]) if self._db[uid] else 0
+
 
 
 
@@ -119,3 +140,20 @@ class _PersistentDict(dict):
             except Exception:
                 pass
         raise ValueError('File not in a supported format')
+
+    def as_dict(self):
+        return dict(self)
+
+
+
+if __name__ == "__main__":
+
+
+    pdict = _PersistentDict(filename="pdicttest.json", format='json')
+
+    pdict["stuff"] = 10
+    pdict["other"] = "junk"
+
+    ddict = pdict.as_dict()
+
+    pass

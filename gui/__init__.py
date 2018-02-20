@@ -4,6 +4,7 @@ from qt.editor1 import Ui_MainWindow
 import sys, traceback, time
 from io import StringIO
 from gui.treeview import TreeView
+from gui.textarea import TextArea
 
 class Editor(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -34,7 +35,7 @@ class GUI(QtWidgets.QApplication):
         self.treeview.selection_callback = self._treeview_selection_callback
 
 
-
+        self.textarea = TextArea(self.editor.body_textedit)
         self.tree_data_model = self.editor.notes_treeview.model()
         self.tree_selection_model = self.editor.notes_treeview.selectionModel()
 
@@ -51,7 +52,7 @@ class GUI(QtWidgets.QApplication):
 
     @property
     def selected_note(self):
-        return self.dictata.note_list.notes[self.treeview.selected.uid]
+        return self.dictata.notes[self.treeview.selected.uid]
 
     @property
     def current_note(self):
@@ -62,18 +63,32 @@ class GUI(QtWidgets.QApplication):
         self._current_note = note
 
     def connect_callbacks(self):
-        self.editor.delete_button.clicked.connect(self._clicked_deletebutton)
         self.editor.notes_treeview.customContextMenuRequested.connect(self.contextMenuEvent)
         self.editor.notes_treeview.clicked.connect(self._clicked_notestreeview)
         self.editor.title_lineedit.textEdited.connect(self._changed_titlelineedit)
         self.editor.dbg1_button.clicked.connect(self.dbg1)
         self.editor.dbg2_button.clicked.connect(self.dbg2)
 
+        # Text editor buttons
+        self.editor.bold_button.clicked.connect(self.textarea.toggle_selected_bold)
+        self.editor.italics_button.clicked.connect(self.textarea.toggle_selected_italics)
+        self.editor.underline_button.clicked.connect(self.textarea.toggle_selected_underline)
+        self.editor.strikethrough_button.clicked.connect(self.textarea.toggle_selected_strikethrough)
+        self.editor.togglehtml_button.clicked.connect(self.textarea.toggle_html_editor)
+        self.editor.headings_button.clicked.connect(self.textarea.toggle_selected_heading)
+
+
+
     def dbg1(self):
+        a = []
+        doc = self.textarea._qtextedit.document()
+        for i in range(doc.blockCount()):
+            a.append(doc.findBlockByNumber(i).text())
+
         pass
 
     def dbg2(self):
-        pass
+        self.textarea.toggle_selected_underline()
 
     def _treeview_selection_callback(self):
         if self.treeview.has_selection():
@@ -82,7 +97,7 @@ class GUI(QtWidgets.QApplication):
 
     def refresh_indextree(self):
         selection = self.treeview.selection
-        item_list = [(note.title, note.uid) for note in self.dictata.note_list.notes.values()]
+        item_list = [(note.title, note.uid) for note in self.dictata.notes.values()]
         self.treeview.repopulate(item_list)
         self.treeview.set_selection(selection)
 
@@ -95,8 +110,7 @@ class GUI(QtWidgets.QApplication):
         row = self.treeview.selected.row
         self.treeview.select(self.treeview.selected.previous)
         self.treeview.remove(row)
-        self.dictata.note_list.delete(uid_to_delete)
-
+        del self.dictata.notes[uid_to_delete]
 
     def _clicked_notestreeview(self, index):
         uid = self.editor.notes_treeview.model().data(index, QtCore.Qt.UserRole)
@@ -108,11 +122,11 @@ class GUI(QtWidgets.QApplication):
         if self.current_note:
             self.current_note.title = self.editor.title_lineedit.text()
             self.current_note.body = self.editor.body_textedit.toPlainText()
-            self.dictata.storage.sync()
+            self.dictata.sync_storage()
 
     def open_note(self, note_uid=None, note_index=None):
         if note_uid:
-            note = self.dictata.note_list.notes[note_uid]
+            note = self.dictata.notes[note_uid]
         elif note_index:
             uid = self.editor.notes_treeview.model().data(note_index, QtCore.Qt.UserRole)
             note = self.dictata.note_list.notes[uid]

@@ -220,38 +220,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(0, 5, 5, 10)
         self.horizontalLayout_5.setSpacing(5)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.delete_button = QtWidgets.QPushButton(self.editortoolbar_container)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.delete_button.sizePolicy().hasHeightForWidth())
-        self.delete_button.setSizePolicy(sizePolicy)
-        self.delete_button.setMinimumSize(QtCore.QSize(25, 30))
-        self.delete_button.setMaximumSize(QtCore.QSize(25, 16777215))
-        self.delete_button.setStyleSheet("QPushButton{\n"
-"    \n"
-"    background-color: rgb(87, 96, 134);\n"
-"    color:                         rgb(255, 255, 255);\n"
-"    border-style:            none;\n"
-"    font-weight:            bold;\n"
-"    font:                        url(:/font/Font Awesome 5 Free-Solid-900.otf);\n"
-"    font-size:                    16px;\n"
-"    qproperty-alignment: AlignCenter;\n"
-"    padding:                    5px;\n"
-"}\n"
-"QPushButton:hover{    \n"
-"    background-color: rgb(47, 175, 178);\n"
-"}\n"
-"QPushButton:checked{    \n"
-"    background-color: rgb(53, 57, 66);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    background-color: rgb(120, 121, 140);\n"
-"}")
-        self.delete_button.setObjectName("delete_button")
-        self.horizontalLayout_5.addWidget(self.delete_button)
         self.bold_button = QtWidgets.QPushButton(self.editortoolbar_container)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -730,31 +698,29 @@ class Ui_MainWindow(object):
         self.lastedit_label.setText(_translate("MainWindow", "Last Edited 3 days ago"))
         self.label.setText(_translate("MainWindow", ""))
         self.tags_lineedit.setText(_translate("MainWindow", "main, recipe, interesting"))
-        self.delete_button.setToolTip(_translate("MainWindow", "Delete"))
-        self.delete_button.setText(_translate("MainWindow", ""))
-        self.bold_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.bold_button.setToolTip(_translate("MainWindow", "Bold"))
         self.bold_button.setText(_translate("MainWindow", ""))
-        self.italics_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.italics_button.setToolTip(_translate("MainWindow", "Italtic"))
         self.italics_button.setText(_translate("MainWindow", ""))
-        self.underline_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.underline_button.setToolTip(_translate("MainWindow", "Underline"))
         self.underline_button.setText(_translate("MainWindow", ""))
-        self.headings_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.headings_button.setToolTip(_translate("MainWindow", "Heading"))
         self.headings_button.setText(_translate("MainWindow", ""))
-        self.quote_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.quote_button.setToolTip(_translate("MainWindow", "Block Quote"))
         self.quote_button.setText(_translate("MainWindow", ""))
-        self.align_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.align_button.setToolTip(_translate("MainWindow", "Align"))
         self.align_button.setText(_translate("MainWindow", ""))
-        self.bulletpoint_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.bulletpoint_button.setToolTip(_translate("MainWindow", "List"))
         self.bulletpoint_button.setText(_translate("MainWindow", ""))
-        self.hyperlink_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.hyperlink_button.setToolTip(_translate("MainWindow", "Link"))
         self.hyperlink_button.setText(_translate("MainWindow", ""))
-        self.togglehtml_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.togglehtml_button.setToolTip(_translate("MainWindow", "Edit HTML"))
         self.togglehtml_button.setText(_translate("MainWindow", ""))
-        self.formatcode_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.formatcode_button.setToolTip(_translate("MainWindow", "Block Code"))
         self.formatcode_button.setText(_translate("MainWindow", ""))
-        self.strikethrough_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.strikethrough_button.setToolTip(_translate("MainWindow", "Strikeout"))
         self.strikethrough_button.setText(_translate("MainWindow", ""))
-        self.sync_button.setToolTip(_translate("MainWindow", "Delete"))
+        self.sync_button.setToolTip(_translate("MainWindow", "Sync"))
         self.sync_button.setText(_translate("MainWindow", ""))
         self.dbg1_button.setText(_translate("MainWindow", "DBG1"))
         self.dbg2_button.setText(_translate("MainWindow", "DBG2"))
