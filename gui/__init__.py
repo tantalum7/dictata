@@ -74,7 +74,6 @@ class GUI(QtWidgets.QApplication):
         self.editor.italics_button.clicked.connect(self.textarea.toggle_selected_italics)
         self.editor.underline_button.clicked.connect(self.textarea.toggle_selected_underline)
         self.editor.strikethrough_button.clicked.connect(self.textarea.toggle_selected_strikethrough)
-        self.editor.togglehtml_button.clicked.connect(self.textarea.toggle_html_editor)
         self.editor.headings_button.clicked.connect(self.textarea.toggle_selected_heading)
 
 
@@ -135,6 +134,8 @@ class GUI(QtWidgets.QApplication):
         self.editor.body_textedit.clear()
         self.editor.body_textedit.append(note.body)
         self.current_note = self.selected_note
+        self.editor.created_label.setText("Created {}".format(note.creation_date))
+        self.editor.lastedit_label.setText("Last edited {}".format(note.last_edit_date))
 
     def contextMenuEvent(self, cursor_position):
         row = self.editor.notes_treeview.indexAt(cursor_position)

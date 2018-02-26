@@ -38,7 +38,7 @@ class NoteIndex:
     def __len__(self):
         return len(self._document)
 
-    def create_note(self):
+    def create_note(self) -> Note:
         """
         Creates a new note with a random uid, inserts it into the index and returns it
         :return:
@@ -53,11 +53,11 @@ class NoteIndex:
         # Create a note instance to wrap the document, and return it
         return Note(doc, new=True)
 
-    def values(self):
+    def values(self) -> [Note]:
         return [self.__getitem__(uid) for uid in self._document.keys()]
 
-    def keys(self) -> list:
+    def keys(self) -> [str]:
         return self._document.keys()
 
-    def items(self) -> [tuple]:
+    def items(self) -> [(str, Note)]:
         return dict(zip(self.keys(), self.values()))

@@ -63,12 +63,17 @@ class DocumentKey:
         else:
             raise Exception("No key or password provided")
 
-    def encrypt(self, plaintext: str):
+    def encrypt(self, plaintext: str) -> str:
         """
         Encrypts the plaintext string, and packs it into a base64 encoded string which includes the nonce
+        Empty strings are returned as is.
         :param plaintext:
         :return:
         """
+
+        # If the string is empty, return it as is
+        if not plaintext:
+            return plaintext
 
         # Create new cipher instance (new nonce)
         cipher = Salsa20.new(self._key)
@@ -82,7 +87,7 @@ class DocumentKey:
         # Pickle the payload into a string and return
         return p.pickle()
 
-    def decrypt(self, packed_crypt_text: str, encoding: str ="utf-8"):
+    def decrypt(self, packed_crypt_text: str, encoding: str ="utf-8") -> str:
         """
         Decrypts the packed crypt text string, expecting the format from the encrypt method above.
         If the encryption payload start marker isn't found, it assumes the string isn't encrypted and returns it as is

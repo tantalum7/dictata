@@ -10,3 +10,6 @@ class DocumentNotFoundException(Exception):
 
 class NoUIDProvidedException(Exception):
     pass
+
+class StorageLockedException(Exception):
+    pass

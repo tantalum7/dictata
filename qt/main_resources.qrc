@@ -2,4 +2,7 @@
   <qresource prefix="font">
     <file>Font Awesome 5 Free-Solid-900.otf</file>
   </qresource>
+  <qresource prefix="img">
+    <file>bg1.png</file>
+  </qresource>
 </RCC>

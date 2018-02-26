@@ -11,8 +11,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(997, 744)
+        MainWindow.resize(997, 740)
+        MainWindow.setStyleSheet("QMainWindow\n"
+"{\n"
+"    background-color: rgb(46, 46, 46);\n"
+"}")
+        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
         self.central_widget = QtWidgets.QWidget(MainWindow)
+        self.central_widget.setStyleSheet("QWidget\n"
+"{\n"
+"    background-color: rgb(46,46,46);\n"
+"    color: rgb(200,200,200);\n"
+"}\n"
+"")
         self.central_widget.setObjectName("central_widget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.central_widget)
         self.horizontalLayout.setContentsMargins(10, 10, 10, 19)
@@ -33,6 +44,8 @@ class Ui_MainWindow(object):
         self.notes_treeview = QtWidgets.QTreeWidget(self.sidebar_container)
         self.notes_treeview.setStyleSheet("QTreeWidget{\n"
 "border:none;\n"
+"background-color: rgb(46,46,46);\n"
+"\n"
 "}")
         self.notes_treeview.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.notes_treeview.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
@@ -76,17 +89,17 @@ class Ui_MainWindow(object):
         self.title_lineedit.setFont(font)
         self.title_lineedit.setStyleSheet("QLineEdit{\n"
 "    border-width:            1px;\n"
-"    border-color:            rgb(0, 0, 0);\n"
-"    border-radius:            0px;\n"
+"    border-color:            rgb(100, 100, 100);\n"
+"    border-style:            solid;\n"
+"    border-radius:            5px;\n"
 "    padding:                    10px;\n"
 "    font-weight:            bold;\n"
+"    color:                        rgb(200, 200, 200)\n"
 "}\n"
 "QLineEdit:focus{\n"
-"    border-width:            1px;\n"
+"    /*border-width:            1px;\n"
 "    border-color:            rgb(255, 255, 255);\n"
-"    border-radius:            0px;\n"
-"    background-color:     rgb(255, 255, 255);\n"
-"    \n"
+"    border-radius:            0px;*/\n"
 "}")
         self.title_lineedit.setObjectName("title_lineedit")
         self.horizontalLayout_4.addWidget(self.title_lineedit)
@@ -105,8 +118,8 @@ class Ui_MainWindow(object):
         self.created_label.setSizePolicy(sizePolicy)
         self.created_label.setStyleSheet("QLabel{\n"
 "    \n"
-"    background-color: rgb(180, 180, 180);\n"
-"    color:                         rgb(255, 255, 255);\n"
+"    /*background-color: rgb(180, 180, 180);*/\n"
+"/*    color:                         rgb(255, 255, 255);*/\n"
 "    padding:                    3px;\n"
 "    font-weight:            bold;\n"
 "}")
@@ -125,8 +138,8 @@ class Ui_MainWindow(object):
         self.lastedit_label.setFont(font)
         self.lastedit_label.setStyleSheet("QLabel{\n"
 "    \n"
-"    background-color: rgb(180, 180, 180);\n"
-"    color:                         rgb(255, 255, 255);\n"
+"    /*background-color: rgb(180, 180, 180);\n"
+"    color:                         rgb(255, 255, 255);*/\n"
 "    padding:                    3px;\n"
 "    font-weight:            bold;\n"
 "}")
@@ -141,34 +154,20 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.tag_container.sizePolicy().hasHeightForWidth())
         self.tag_container.setSizePolicy(sizePolicy)
         self.tag_container.setMinimumSize(QtCore.QSize(0, 30))
-        self.tag_container.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.tag_container.setMaximumSize(QtCore.QSize(16777215, 35))
         self.tag_container.setObjectName("tag_container")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.tag_container)
         self.horizontalLayout_3.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.label = QtWidgets.QLabel(self.tag_container)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setMinimumSize(QtCore.QSize(0, 30))
-        self.label.setMaximumSize(QtCore.QSize(16777215, 30))
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
         self.label.setStyleSheet("QLabel{\n"
 "    \n"
-"    background-color: rgb(180, 180, 180);\n"
-"    color:                         rgb(255, 255, 255);\n"
-"    padding:                    3px 3px 6px 3px;\n"
+"    /*background-color: rgb(180, 180, 180);\n"
+"    color:                         rgb(255, 255, 255);*/\n"
+"    padding:                    3px;\n"
 "    font-weight:            bold;\n"
-"    font-size:                    16px;\n"
 "}")
-        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
         self.horizontalLayout_3.addWidget(self.label)
         self.tags_lineedit = QtWidgets.QLineEdit(self.tag_container)
@@ -184,10 +183,11 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.tags_lineedit.setFont(font)
-        self.tags_lineedit.setStyleSheet("QLineEdit{\n"
+        self.tags_lineedit.setStyleSheet("QLineEdit{    \n"
 "    border-width:            1px;\n"
-"    border-color:            rgb(0, 0, 0);\n"
-"    border-radius:            0px;\n"
+"    border-color:            rgb(100, 100, 100);\n"
+"    border-style:            solid;\n"
+"    border-radius:            5px;\n"
 "    padding:                    5px 5px 8px 5px;\n"
 "    font-weight:            bold;\n"
 "}\n"
@@ -476,38 +476,6 @@ class Ui_MainWindow(object):
 "}")
         self.hyperlink_button.setObjectName("hyperlink_button")
         self.horizontalLayout_5.addWidget(self.hyperlink_button)
-        self.togglehtml_button = QtWidgets.QPushButton(self.editortoolbar_container)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.togglehtml_button.sizePolicy().hasHeightForWidth())
-        self.togglehtml_button.setSizePolicy(sizePolicy)
-        self.togglehtml_button.setMinimumSize(QtCore.QSize(25, 30))
-        self.togglehtml_button.setMaximumSize(QtCore.QSize(25, 16777215))
-        self.togglehtml_button.setStyleSheet("QPushButton{\n"
-"    \n"
-"    background-color: rgb(87, 96, 134);\n"
-"    color:                         rgb(255, 255, 255);\n"
-"    border-style:            none;\n"
-"    font-weight:            bold;\n"
-"    font:                        url(:/font/Font Awesome 5 Free-Solid-900.otf);\n"
-"    font-size:                    16px;\n"
-"    qproperty-alignment: AlignCenter;\n"
-"    padding:                    5px;\n"
-"}\n"
-"QPushButton:hover{    \n"
-"    background-color: rgb(47, 175, 178);\n"
-"}\n"
-"QPushButton:checked{    \n"
-"    background-color: rgb(53, 57, 66);\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:disabled{\n"
-"    background-color: rgb(120, 121, 140);\n"
-"}")
-        self.togglehtml_button.setObjectName("togglehtml_button")
-        self.horizontalLayout_5.addWidget(self.togglehtml_button)
         self.formatcode_button = QtWidgets.QPushButton(self.editortoolbar_container)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -620,6 +588,7 @@ class Ui_MainWindow(object):
         self.body_textedit.setFont(font)
         self.body_textedit.setStyleSheet("QTextEdit{\n"
 "    border:                    none;\n"
+"    background-color: rgb(34,34,34);\n"
 "}\n"
 "\n"
 "QScrollBar::vertical{\n"
@@ -662,6 +631,11 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.central_widget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 997, 21))
+        self.menubar.setStyleSheet("QMenuBar\n"
+"{\n"
+"    background-color: rgb(46,46,46);\n"
+"    color: rgb(200,200,200);\n"
+"}")
         self.menubar.setObjectName("menubar")
         self.menuOptions = QtWidgets.QMenu(self.menubar)
         self.menuOptions.setObjectName("menuOptions")
@@ -696,7 +670,7 @@ class Ui_MainWindow(object):
         self.title_lineedit.setText(_translate("MainWindow", "An Interesting Title"))
         self.created_label.setText(_translate("MainWindow", "Created 14 Dec 2017"))
         self.lastedit_label.setText(_translate("MainWindow", "Last Edited 3 days ago"))
-        self.label.setText(_translate("MainWindow", ""))
+        self.label.setText(_translate("MainWindow", "Tags"))
         self.tags_lineedit.setText(_translate("MainWindow", "main, recipe, interesting"))
         self.bold_button.setToolTip(_translate("MainWindow", "Bold"))
         self.bold_button.setText(_translate("MainWindow", ""))
@@ -714,8 +688,6 @@ class Ui_MainWindow(object):
         self.bulletpoint_button.setText(_translate("MainWindow", ""))
         self.hyperlink_button.setToolTip(_translate("MainWindow", "Link"))
         self.hyperlink_button.setText(_translate("MainWindow", ""))
-        self.togglehtml_button.setToolTip(_translate("MainWindow", "Edit HTML"))
-        self.togglehtml_button.setText(_translate("MainWindow", ""))
         self.formatcode_button.setToolTip(_translate("MainWindow", "Block Code"))
         self.formatcode_button.setText(_translate("MainWindow", ""))
         self.strikethrough_button.setToolTip(_translate("MainWindow", "Strikeout"))

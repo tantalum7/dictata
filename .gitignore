@@ -62,3 +62,5 @@ docs/_build/
 /venv/
 /test.json
 venv36/
+*.lock
+storage/test.json

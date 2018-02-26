@@ -2,9 +2,6 @@
 
 class GenericBackend(object):
 
-    def initialise(self, settings):
-        raise NotImplemented
-
     def open(self, path):
         raise NotImplemented
 

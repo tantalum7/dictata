@@ -7,13 +7,30 @@
     <x>0</x>
     <y>0</y>
     <width>997</width>
-    <height>744</height>
+    <height>740</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow
+{
+	background-color: rgb(46, 46, 46);
+}</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="central_widget">
+   <property name="styleSheet">
+    <string notr="true">QWidget
+{
+	background-color: rgb(46,46,46);
+	color: rgb(200,200,200);
+}
+</string>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
      <number>0</number>
@@ -65,6 +82,8 @@
          <property name="styleSheet">
           <string notr="true">QTreeWidget{
 border:none;
+background-color: rgb(46,46,46);
+
 }</string>
          </property>
          <property name="horizontalScrollBarPolicy">
@@ -172,17 +191,17 @@ border:none;
             <property name="styleSheet">
              <string notr="true">QLineEdit{
 	border-width:			1px;
-	border-color:			rgb(0, 0, 0);
-	border-radius:			0px;
+	border-color:			rgb(100, 100, 100);
+	border-style:			solid;
+	border-radius:		    5px;
 	padding:					10px;
 	font-weight:			bold;
+	color:						rgb(200, 200, 200)
 }
 QLineEdit:focus{
-	border-width:			1px;
+	/*border-width:			1px;
 	border-color:			rgb(255, 255, 255);
-	border-radius:			0px;
-	background-color: 	rgb(255, 255, 255);
-	
+	border-radius:			0px;*/
 }</string>
             </property>
             <property name="text">
@@ -225,8 +244,8 @@ QLineEdit:focus{
                <property name="styleSheet">
                 <string notr="true">QLabel{
 	
-	background-color: rgb(180, 180, 180);
-	color: 						rgb(255, 255, 255);
+	/*background-color: rgb(180, 180, 180);*/
+/*	color: 						rgb(255, 255, 255);*/
 	padding:					3px;
 	font-weight:			bold;
 }</string>
@@ -259,8 +278,8 @@ QLineEdit:focus{
                <property name="styleSheet">
                 <string notr="true">QLabel{
 	
-	background-color: rgb(180, 180, 180);
-	color: 						rgb(255, 255, 255);
+	/*background-color: rgb(180, 180, 180);
+	color: 						rgb(255, 255, 255);*/
 	padding:					3px;
 	font-weight:			bold;
 }</string>
@@ -293,7 +312,7 @@ QLineEdit:focus{
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>30</height>
+           <height>35</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -314,46 +333,17 @@ QLineEdit:focus{
           </property>
           <item>
            <widget class="QLabel" name="label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="styleSheet">
              <string notr="true">QLabel{
 	
-	background-color: rgb(180, 180, 180);
-	color: 						rgb(255, 255, 255);
-	padding:					3px 3px 6px 3px;
+	/*background-color: rgb(180, 180, 180);
+	color: 						rgb(255, 255, 255);*/
+	padding:					3px;
 	font-weight:			bold;
-	font-size:					16px;
 }</string>
             </property>
             <property name="text">
-             <string></string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <string>Tags</string>
             </property>
            </widget>
           </item>
@@ -385,10 +375,11 @@ QLineEdit:focus{
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">QLineEdit{
-	border-width:			1px;
-	border-color:			rgb(0, 0, 0);
-	border-radius:			0px;
+             <string notr="true">QLineEdit{	
+    border-width:			1px;
+	border-color:			rgb(100, 100, 100);
+	border-style:			solid;
+	border-radius:		    5px;
 	padding:					5px 5px 8px 5px;
 	font-weight:			bold;
 }
@@ -880,58 +871,6 @@ QPushButton:disabled{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="togglehtml_button">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>25</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>25</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Edit HTML</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton{
-	
-	background-color: rgb(87, 96, 134);
-	color:					 	rgb(255, 255, 255);
-	border-style:			none;
-	font-weight:			bold;
-	font:						url(:/font/Font Awesome 5 Free-Solid-900.otf);
-	font-size:					16px;
-	qproperty-alignment: AlignCenter;
-	padding:					5px;
-}
-QPushButton:hover{	
-	background-color: rgb(47, 175, 178);
-}
-QPushButton:checked{	
-	background-color: rgb(53, 57, 66);
-}
-
-
-QPushButton:disabled{
-	background-color: rgb(120, 121, 140);
-}</string>
-               </property>
-               <property name="text">
-                <string></string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="formatcode_button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1128,6 +1067,7 @@ QPushButton:disabled{
             <property name="styleSheet">
              <string notr="true">QTextEdit{
 	border:					none;
+	background-color: rgb(34,34,34);
 }
 
 QScrollBar::vertical{
@@ -1189,6 +1129,13 @@ p, li { white-space: pre-wrap; }
      <width>997</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar
+{
+	background-color: rgb(46,46,46);
+	color: rgb(200,200,200);
+}</string>
    </property>
    <widget class="QMenu" name="menuOptions">
     <property name="title">

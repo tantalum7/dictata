@@ -11,8 +11,11 @@ StorageBackend = LocalJsonBackend
 class Storage:
 
     def __init__(self, settings=None):
-        self._backend = StorageBackend()
-        self._backend.initialise(settings=settings)
+        """
+        Thin wrapper class around the specific implementation of GenericBackend used
+        :param settings:
+        """
+        self._backend = StorageBackend(settings=settings)
 
     def open(self, path):
         self._backend.open(path=path)

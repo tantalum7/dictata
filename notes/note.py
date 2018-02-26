@@ -1,7 +1,7 @@
 
 # Library imports
 from time import time
-from datetime import date
+from datetime import datetime
 
 
 class Note(object):
@@ -53,11 +53,11 @@ class Note(object):
 
     @property
     def creation_time(self):
-        return self._document['creation_time']
+        return float(self._document['creation_time'])
 
     @property
     def creation_date(self):
-        return date(self._document['creation_time'])
+        return datetime.fromtimestamp(int(self.creation_time)).strftime('%d %b %Y')
 
     @property
     def last_edit_time(self):
@@ -65,7 +65,7 @@ class Note(object):
 
     @property
     def last_edit_date(self):
-        return date(self._document['last_edit_time'])
+        return datetime.fromtimestamp(int(self.last_edit_time)).strftime('%d %b %Y')
 
     @property
     def meta(self):
@@ -77,4 +77,3 @@ class Note(object):
 
     def _touch(self):
         self._document["last_edit_time"] = time()
-
