@@ -4,21 +4,23 @@ import uuid
 
 # Project imports
 from storage.local_json_backend import LocalJsonBackend
+from storage.ftp_json_backend import FtpJsonBackend
 
 # Define StorageBackend as localJsonBackend. TODO: Make backend selection programmatic
-StorageBackend = LocalJsonBackend
+#StorageBackend = LocalJsonBackend
+StorageBackend = FtpJsonBackend
 
 class Storage:
 
-    def __init__(self, settings=None):
+    def __init__(self, settings: dict):
         """
         Thin wrapper class around the specific implementation of GenericBackend used
         :param settings:
         """
         self._backend = StorageBackend(settings=settings)
 
-    def open(self, path):
-        self._backend.open(path=path)
+    def open(self):
+        self._backend.open()
 
     def close(self, options=None):
         self._backend.close(options=options)

@@ -13,9 +13,15 @@ class Dictata(object):
 
     def __init__(self, args, json_file):
 
+        settings = {"path": "dictata/notes1.json",
+                    "url": "ftp.oliver-kent.co.uk",
+                    "username": "python_test@oliver-kent.co.uk",
+                    "password": "pineapple$123",
+                    }
+
         # Initialise storage
-        self._storage = Storage()
-        self._storage.open(json_file)
+        self._storage = Storage(settings)
+        self._storage.open()
         self.doc_key = DocumentKey(plaintext_password="password")
         self.notes = NoteIndex(self._storage, self.doc_key)
 
